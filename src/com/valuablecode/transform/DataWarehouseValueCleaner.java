@@ -8,8 +8,8 @@ import java.util.List;
 
 public class DataWarehouseValueCleaner {
 
-    private static final List<String> IGNORE_VALUES = Arrays.asList(new String[]{"UNABLE TO CALCULATE", "NOT CALCULATED", "unable to calculate",
-            "unable to perform", "uanble to calculate", "UANBLE TO CALCULATE", "a", "A"});
+    private static final List<String> IGNORE_VALUES = Arrays.asList("UNABLE TO CALCULATE", "NOT CALCULATED", "unable to calculate",
+            "unable to perform", "uanble to calculate", "UANBLE TO CALCULATE", "a", "A");
 
     public String cleanIncomingValues(String theValue, ResultValueType resultValueType) {
 
@@ -27,10 +27,12 @@ public class DataWarehouseValueCleaner {
             return cleaner.cleanValue(theValue);
         }
 
+//        if (resultValueType == ResultValueType.RANGE) {
+//            final ValueCleaner cleaner = ValueCleanerFactory.createCleanerFromValueType(resultValueType);
+//            return cleaner.cleanValue(theValue);
+//        }
 
-        if (isTextOrCompoundType(resultValueType)) {
-            return theValue;
-        }
+
 
         // Added for float results with these text strings - we want to just
         // drop the result
