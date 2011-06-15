@@ -10,9 +10,9 @@ public class DateValueCleaner extends NonTextValueCleaner {
             return null;
         }
 
-        value = value.trim();
+        String trimmedValue = value.trim();
 
-        return performExtraCharacterCleaning(value);
+        return performExtraCharacterCleaning(trimmedValue);
 
     }
 

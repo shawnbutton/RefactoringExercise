@@ -9,6 +9,7 @@ public abstract class NonTextValueCleaner extends ValueCleaner {
 
     protected static final List<String> IGNORE_VALUES = Arrays.asList("UNABLE TO CALCULATE", "NOT CALCULATED", "unable to calculate",
                 "unable to perform", "uanble to calculate", "UANBLE TO CALCULATE", "a", "A");
+    private static final Pattern pattern = Pattern.compile("%|<|extended|venous| ");
 
 
     protected String startAllDecimalsWithZero(String theValue) {
@@ -20,7 +21,6 @@ public abstract class NonTextValueCleaner extends ValueCleaner {
 
     protected String removeCharactersThatAreToBeIgnored(String theValue) {
 
-        Pattern pattern = Pattern.compile("%|<|extended|venous| ");
         Matcher matcher = pattern.matcher(theValue);
 
         return matcher.replaceAll("");
