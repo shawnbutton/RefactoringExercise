@@ -47,6 +47,7 @@ public class DataWarehouseValueCleanerCharacterisationTest {
 			{ null, null, ResultValueType.FLOAT }, { "0.72", ".72", ResultValueType.FLOAT },
 			{ "0.72", ".72%", ResultValueType.FLOAT }, { null, ". 72", ResultValueType.FLOAT },
 			{ null, "N/A", ResultValueType.FLOAT }, { null, "NA", ResultValueType.FLOAT },
+			{"N/A", "N/A ", ResultValueType.FLOAT },
 
 			{ null, "A", ResultValueType.FLOAT }, { null, "UNABLE TO CALCULATE", ResultValueType.FLOAT },
 			{ null, "Uanble to Calculate", ResultValueType.FLOAT },

@@ -10,65 +10,60 @@ public class DataWarehouseValueCleaner {
 
     public String cleanIncomingValues(String theValue, ResultValueType resultValueType) {
 		if (theValue == null) {
-			return theValue;
+			return null;
 		}
 
-		if (resultValueType == ResultValueType.FLOAT || resultValueType == ResultValueType.RANGE
-				|| resultValueType == ResultValueType.DATE) {
-
-            if (valueContainsIgnoreValue(theValue)) {
-				return null;
-			}
-
-			// remove spaces from the start and end of the string
-			theValue = theValue.trim();
-
-            if (floatAndMoreThanOneSpaceRemaining(theValue, resultValueType)) return null;
-
-            theValue = removeAllCharactersAfterSpace(theValue);
-
-            theValue = removeOddCharacters(theValue);
-
-			// add '0' to all decimals
-            theValue = add0ToAllDecimals(theValue);
+        if (isTextOrCompoundType(resultValueType)) {
+            return theValue;
         }
 
-		// Added for float results with these text strings - we want to just
-		// drop the result
-		if (resultValueType == ResultValueType.FLOAT) {
-			if (valueEqualsNA(theValue)) {
-				return null;
-			}
-		}
-
-		return theValue;
-	}
-
-    private boolean floatAndMoreThanOneSpaceRemaining(String theValue, ResultValueType resultValueType) {
+        // Added for float results with these text strings - we want to just
+        // drop the result
         if (resultValueType == ResultValueType.FLOAT) {
-            int firstSpacePosition = theValue.indexOf(" ");
-            int lastSpacePosition = theValue.lastIndexOf("");
-            if (firstSpacePosition > 0 && lastSpacePosition > 0 && firstSpacePosition != lastSpacePosition) {
-                // more than one space in the string; cannot parse the value
-                return true;
+            if (valueEqualsNA(theValue)) {
+                return null;
             }
         }
-        return false;
+
+
+         if (IGNORE_VALUES.contains(theValue)) {
+             return null;
+         }
+
+        theValue = theValue.trim();
+
+        if (resultValueType == ResultValueType.FLOAT) {
+            if (moreThanOneSpaceRemaining(theValue)) return null;
+        }
+
+        theValue = removeAllCharactersAfterSpace(theValue);
+
+        theValue = removeOddCharacters(theValue);
+
+        theValue = startAllDecimalsWithZero(theValue);
+
+        return theValue;
+	}
+
+    private boolean isTextOrCompoundType(ResultValueType resultValueType) {
+        return (ResultValueType.TEXT.equals(resultValueType) || (ResultValueType.COMPOUND.equals(resultValueType)));
+    }
+
+    private boolean moreThanOneSpaceRemaining(String theValue) {
+            int firstSpacePosition = theValue.indexOf(" ");
+            int lastSpacePosition = theValue.lastIndexOf("");
+        return (firstSpacePosition > 0) && (lastSpacePosition > 0) && (firstSpacePosition != lastSpacePosition);
     }
 
     private boolean valueEqualsNA(String theValue) {
         return theValue.equals("NA") || theValue.equals("N/A");
     }
 
-    private String add0ToAllDecimals(String theValue) {
+    private String startAllDecimalsWithZero(String theValue) {
         if (theValue.startsWith(".")) {
             theValue = "0" + theValue;
         }
         return theValue;
-    }
-
-    private boolean valueContainsIgnoreValue(String theValue) {
-        return IGNORE_VALUES.contains(theValue);
     }
 
     private String removeOddCharacters(String theValue) {
