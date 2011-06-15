@@ -1,9 +1,26 @@
 package com.valuablecode.transform.valueCleaner;
 
 
-public class RangeValueCleaner extends ValueCleaner {
+public class RangeValueCleaner extends NonTextValueCleaner {
     @Override
     public String cleanValue(String value) {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+
+
+
+        if (IGNORE_VALUES.contains(value)) {
+            return null;
+        }
+
+        value = value.trim();
+
+        value = removeAllCharactersAfterSpace(value);
+
+        value = removeOddCharacters(value);
+
+        value = startAllDecimalsWithZero(value);
+
+        return value;
+
     }
+
 }
