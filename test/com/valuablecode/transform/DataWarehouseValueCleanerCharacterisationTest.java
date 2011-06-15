@@ -64,7 +64,7 @@ public class DataWarehouseValueCleanerCharacterisationTest {
 			{ "120/180", "120/180 venouse", ResultValueType.RANGE },
 			{ null, "unable to perform", ResultValueType.RANGE },
 
-			{ null, null, ResultValueType.TEXT }, { "Some Text", "Some Text", ResultValueType.TEXT }, 
+			{ null, null, ResultValueType.TEXT }, { "Some Text", "Some Text", ResultValueType.TEXT }
 		});
 	}
 
