@@ -1,5 +1,8 @@
 package com.valuablecode.transform;
 
+import com.valuablecode.transform.valueCleaner.ValueCleaner;
+import com.valuablecode.transform.valueCleaner.ValueCleanerFactory;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -9,9 +12,21 @@ public class DataWarehouseValueCleaner {
             "unable to perform", "uanble to calculate", "UANBLE TO CALCULATE", "a", "A"});
 
     public String cleanIncomingValues(String theValue, ResultValueType resultValueType) {
+
         if (theValue == null) {
             return null;
         }
+
+        if (resultValueType == ResultValueType.COMPOUND) {
+            final ValueCleaner cleaner = ValueCleanerFactory.createCleanerFromValueType(resultValueType);
+            return cleaner.cleanValue(theValue);
+        }
+
+        if (resultValueType == ResultValueType.TEXT) {
+            final ValueCleaner cleaner = ValueCleanerFactory.createCleanerFromValueType(resultValueType);
+            return cleaner.cleanValue(theValue);
+        }
+
 
         if (isTextOrCompoundType(resultValueType)) {
             return theValue;
