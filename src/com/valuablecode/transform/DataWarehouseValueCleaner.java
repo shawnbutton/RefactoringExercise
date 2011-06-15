@@ -9,9 +9,9 @@ public class DataWarehouseValueCleaner {
             "unable to perform", "uanble to calculate", "UANBLE TO CALCULATE", "a", "A"});
 
     public String cleanIncomingValues(String theValue, ResultValueType resultValueType) {
-		if (theValue == null) {
-			return null;
-		}
+        if (theValue == null) {
+            return null;
+        }
 
         if (isTextOrCompoundType(resultValueType)) {
             return theValue;
@@ -26,9 +26,9 @@ public class DataWarehouseValueCleaner {
         }
 
 
-         if (IGNORE_VALUES.contains(theValue)) {
-             return null;
-         }
+        if (IGNORE_VALUES.contains(theValue)) {
+            return null;
+        }
 
         theValue = theValue.trim();
 
@@ -43,15 +43,15 @@ public class DataWarehouseValueCleaner {
         theValue = startAllDecimalsWithZero(theValue);
 
         return theValue;
-	}
+    }
 
     private boolean isTextOrCompoundType(ResultValueType resultValueType) {
         return (ResultValueType.TEXT.equals(resultValueType) || (ResultValueType.COMPOUND.equals(resultValueType)));
     }
 
     private boolean moreThanOneSpaceRemaining(String theValue) {
-            int firstSpacePosition = theValue.indexOf(" ");
-            int lastSpacePosition = theValue.lastIndexOf("");
+        int firstSpacePosition = theValue.indexOf(" ");
+        int lastSpacePosition = theValue.lastIndexOf("");
         return (firstSpacePosition > 0) && (lastSpacePosition > 0) && (firstSpacePosition != lastSpacePosition);
     }
 
