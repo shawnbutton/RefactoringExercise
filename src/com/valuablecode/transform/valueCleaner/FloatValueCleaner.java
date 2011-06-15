@@ -14,17 +14,12 @@ public class FloatValueCleaner extends NonTextValueCleaner {
             return null;
         }
 
-        value = value.trim();
+        final String trimmedValue = value.trim();
 
-        if (moreThanOneSpaceRemaining(value)) return null;
+        if (moreThanOneSpaceRemaining(trimmedValue)) return null;
 
-        value = removeAllCharactersAfterSpace(value);
+        return performExtraCharacterCleaning(trimmedValue);
 
-        value = removeOddCharacters(value);
-
-        value = startAllDecimalsWithZero(value);
-
-        return value;
 
     }
 

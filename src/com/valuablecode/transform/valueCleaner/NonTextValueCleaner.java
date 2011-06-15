@@ -1,9 +1,9 @@
 package com.valuablecode.transform.valueCleaner;
 
-import com.valuablecode.transform.ResultValueType;
-
 import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public abstract class NonTextValueCleaner extends ValueCleaner {
 
@@ -18,14 +18,13 @@ public abstract class NonTextValueCleaner extends ValueCleaner {
         return theValue;
     }
 
-    protected String removeOddCharacters(String theValue) {
-        theValue = theValue.replaceAll("%", "");
-        theValue = theValue.replaceAll("<", "");
-        theValue = theValue.replaceAll("extended", "");
-        theValue = theValue.replaceAll("venous", "");
-        theValue = theValue.replaceAll(" ", "");
-        theValue = theValue.replaceAll("%", "NOT CALCULATED");
-        return theValue;
+    protected String removeCharactersThatAreToBeIgnored(String theValue) {
+
+        Pattern pattern = Pattern.compile("%|<|extended|venous| ");
+        Matcher matcher = pattern.matcher(theValue);
+
+        return matcher.replaceAll("");
+
     }
 
     protected String removeAllCharactersAfterSpace(String theValue) {
@@ -37,4 +36,13 @@ public abstract class NonTextValueCleaner extends ValueCleaner {
     }
 
 
+    protected String performExtraCharacterCleaning(String value) {
+        String trimmedValue = removeAllCharactersAfterSpace(value);
+
+        String cleanedValue = removeCharactersThatAreToBeIgnored(trimmedValue);
+
+        String addedZeroValue = startAllDecimalsWithZero(cleanedValue);
+
+        return addedZeroValue;
+    }
 }

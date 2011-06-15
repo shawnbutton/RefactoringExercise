@@ -12,13 +12,7 @@ public class DateValueCleaner extends NonTextValueCleaner {
 
         value = value.trim();
 
-        value = removeAllCharactersAfterSpace(value);
-
-        value = removeOddCharacters(value);
-
-        value = startAllDecimalsWithZero(value);
-
-        return value;
+        return performExtraCharacterCleaning(value);
 
     }
 
