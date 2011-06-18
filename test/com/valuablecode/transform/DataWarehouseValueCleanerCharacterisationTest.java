@@ -19,12 +19,12 @@ import org.junit.runners.Parameterized.Parameters;
 @RunWith(Parameterized.class)
 public class DataWarehouseValueCleanerCharacterisationTest {
 
-	final String dataWarehouseValue;
-	final String expected;
-	final ResultValueType resultValueType;
-	final String reason;
+	private final String dataWarehouseValue;
+	private final String expected;
+	private final ResultValueType resultValueType;
+	private final String reason;
 
-	final DataWarehouseValueCleaner sut = new DataWarehouseValueCleaner();
+    private final DataWarehouseValueCleaner sut = new DataWarehouseValueCleaner();
 
 	public DataWarehouseValueCleanerCharacterisationTest(String expected, String dataWarehouseValue,
 			ResultValueType resultValueType) {
